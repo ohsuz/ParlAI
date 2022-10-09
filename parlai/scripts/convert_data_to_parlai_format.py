@@ -51,7 +51,12 @@ def dump_data(opt):
             value = acts[0].get('labels', acts[0].pop('eval_labels', None))
             acts[0].force_set('labels', value)
             txt = msg_to_str(acts[0], ignore_fields=ignorefields)
-            fw.write(txt + '\n')
+            
+            try:
+                fw.write(txt + '\n')
+            except:
+                fw.write(txt.encode('utf16', errors='surrogatepass').decode('utf16') + '\n')
+                
             if acts[0].get('episode_done', False):
                 fw.write('\n')
 
